@@ -20,31 +20,34 @@ public class User {
     // nullable: null 허용 여부
 // unique: 중복 허용 여부 (false 일때 중복 허용)
     @Column(nullable = false, unique = true)
-    private String username;
+    private String nickname;
 
     @Column(nullable = false)
     private String password;
 
-    @Column(nullable = false)
-    private String passwordCheck;
+//    @Column(nullable = false)
+//    private String passwordCheck;
 
     @Column(unique = true)
     private Long kakaoId;
 
     // 폼 로그인 사용 시
-    public User(String username, String password, String passwordCheck)
+//    public User(String nickname, String password, String passwordCheck)
+    public User(String nickname, String password)
     {
-        this.username = username;
+        this.nickname = nickname;
         this.password = password;
-        this.passwordCheck = passwordCheck;
+//        this.passwordCheck = passwordCheck;
         this.kakaoId = null;
     }
 
     // 카카오 소셜 로그인 사용 시
-    public User(String username, String password, String passwordCheck, Long kakaoId) {
-        this.username = username;
+    public User(String nickname, String password, Long kakaoId)
+//    public User(String nickname, String password, String passwordCheck, Long kakaoId)
+    {
+        this.nickname = nickname;
         this.password = password;
-        this.passwordCheck = passwordCheck;
+//        this.passwordCheck = passwordCheck;
         this.kakaoId = kakaoId;
     }
 }
