@@ -1,4 +1,4 @@
-package com.sparta.springweek2.Controller;
+package com.sparta.springweek2.User.Controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
