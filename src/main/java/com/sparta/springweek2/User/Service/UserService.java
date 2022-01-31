@@ -26,6 +26,13 @@ public class UserService {
 // 회원 ID 중복 확인
         String nickname = requestDto.getNickname();
         Optional<User> found = userRepository.findByNickname(nickname);
+
+        if ( nickname.length() < 3)
+        {
+            throw new IllegalArgumentException("최소 3자 이상의 닉네임을 입력해주세요.");
+        }
+
+
         if (found.isPresent())
         {
             throw new IllegalArgumentException("중복된 닉네임입니다.");
