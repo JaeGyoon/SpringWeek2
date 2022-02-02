@@ -1,10 +1,13 @@
 package com.sparta.springweek2.User.Controller;
 
 
+import com.sparta.springweek2.Security.UserDetailsImpl;
 import com.sparta.springweek2.User.Model.User;
 import com.sparta.springweek2.User.Repository.UserRepository;
 import com.sparta.springweek2.User.Service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,11 +27,12 @@ public class UserFindController {
         return userRepository.findAll();
     }
 
-    @PostMapping("/user/signup2")
-    public String registerUser2(String nickname, String password, String passwordCheck)
+
+    // 유저 로그인 체크
+    @GetMapping("/user/userCheck")
+    public boolean userCheck(@AuthenticationPrincipal UserDetailsImpl userDetails)
     {
-//        userService.registerUser2(nickname,password,passwordCheck);
-        return "redirect:/user/login";
+        return userDetails != null;
     }
 
 }

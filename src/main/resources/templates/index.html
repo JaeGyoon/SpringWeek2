@@ -1,5 +1,9 @@
 <!doctype html>
-<html lang="en">
+<!--<html lang="en">-->
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -8,7 +12,6 @@
     <meta property="og:title" content="00만의 셀렉샵">
     <meta property="og:description" content="관심상품을 선택하고, 최저가 알림을 확인해보세요!">
     <meta property="og:image" content="images/og_selectshop.png">
-    <link href="https://fonts.googleapis.com/css2?family=family=Nanum+Gothic&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="/js/basic.js"></script>
@@ -17,16 +20,25 @@
 <body>
 <div class="header" style="position:relative;">
     <div id="header-title-login-user">
-        <span th:text="${nickname}" ></span> 님의
+        <span th:if="${nickname}"  th:text="| ${nickname} 님의 |" >  </span>
+
+
     </div>
     <div id="header-title-select-shop">
         Select Shop
     </div>
 
-    <form id="my_form" method="post" action="/user/logout">
-        <a id="logout-text" href="javascript:{}" onclick="document.getElementById('my_form').submit();">로그아웃</a>
-    </form>
+
+
+    <button th:if="${nickname}"  th:text="로그아웃" onclick="location.href='/user/logout'" >
+
+    </button>
+    <button th:unless="${nickname}"  th:text="로그인" onclick="location.href='/user/login'" >
+
+    </button>
+
 </div>
+
 
 </body>
 </html>

@@ -7,8 +7,12 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+    <script src="/js/login.js"></script>
+
+
     <meta charset="UTF-8">
     <title>로그인 페이지</title>
 </head>
@@ -29,9 +33,15 @@
         <input type="password" name="password" class="login-input-box">
 
         <button id="login-id-submit">로그인</button>
+
+
     </form>
     <div id="login-failed" style="display:none" class="alert alert-danger" role="alert">닉네임 또는 패스워드를 확인해주세요</div>
 </div>
+
+
+
+
 </body>
 <script>
     const href = location.href;

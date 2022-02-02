@@ -63,27 +63,16 @@ public class UserService {
             return "중복된 id 입니다.";
         }
 
-// 패스워드 암호화
-        String encodingPassword = passwordEncoder.encode(requestDto.getPassword());
-//        String passwordCheck = passwordEncoder.encode(requestDto.getPasswordCheck());
 
-//        User user = new User(nickname, password, passwordCheck);
+        String encodingPassword = passwordEncoder.encode(requestDto.getPassword());
         User user = new User(nickname, encodingPassword);
         userRepository.save(user);
 
-        return "";
+        return "회원가입 완료";
     }
 
-    public void registerUser2(String nickname, String password, String passwordCheck)
-    {
-        String password1 = passwordEncoder.encode(password);
-//        String passwordCheck = passwordEncoder.encode(requestDto.getPasswordCheck());
 
 
-//        User user = new User(nickname, password, passwordCheck);
-        User user = new User(nickname, password1);
-        userRepository.save(user);
-    }
 
 
 }
