@@ -34,7 +34,7 @@ function makeMessage(id, postName, userName, postText,createdAt, i)
 {
     return `<tr class="tableColor">
                                         <td scope="row" class="tbPostNum"> ${id} </td>
-                                        <td scope="row" class="tbPostName" onclick="readPost(${id})"> ${postName} </td>
+                                        <td scope="row" class="tbPostName" onclick="location.href='view.html?id=${id}'"> ${postName} </td>
                                         <td scope="row" class="tbUserName"> ${userName} </td>
                                         <td scope="row" class="tbWriteDay"> ${createdAt} </td>
                                     </tr>`

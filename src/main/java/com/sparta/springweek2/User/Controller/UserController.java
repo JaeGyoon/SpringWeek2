@@ -75,9 +75,26 @@ public class UserController
 
 
     @GetMapping("/post/post")
-    public String WritePage()
+    public String WritePage(Model model, @AuthenticationPrincipal UserDetailsImpl userDetails)
     {
+        if (userDetails != null)
+        {
+            model.addAttribute("username", userDetails.getUsername());
+        }
+
         return "write";
+    }
+
+    @GetMapping("/view.html")
+
+
+    public String detail(Model model, @AuthenticationPrincipal UserDetailsImpl userDetails)
+    {
+        if (userDetails != null)
+        {
+            model.addAttribute("username", userDetails.getUsername());
+        }
+        return "view";
     }
 
 

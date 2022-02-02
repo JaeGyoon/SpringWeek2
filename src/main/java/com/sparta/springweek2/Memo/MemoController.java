@@ -41,4 +41,13 @@ public class MemoController
         memoRepository.deleteById(id);
         return id;
     }
+
+    // 게시글 디테일 조회
+    @GetMapping("/view/memos/{id}")
+    public Memo getContents(@PathVariable Long id) {
+        Memo contents =  memoRepository.findById(id).orElseThrow(
+                ()->new IllegalArgumentException("id가 존재하지 않습니다."));
+        return contents;
+    }
+
 }

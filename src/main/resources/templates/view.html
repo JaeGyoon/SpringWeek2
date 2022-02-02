@@ -1,10 +1,192 @@
 <!DOCTYPE html>
-<html lang="en">
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="stylesheet" type="text/css" href="/css/view.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+
+
+    <script th:inline="javascript">
+        $(document).ready(function () {
+            getMessages();
+            getReplies();
+        })
+
+        // 게시글을 불러옵니다.
+        function getMessages() {
+            $('#cards-box').empty();
+            $('#reply-box').empty();
+            let idx = location.href.split("id=")[1];
+            $.ajax({
+                type: "GET",
+                url: `/view/memos/${idx}`,
+                data: {},
+                success: function (response) {
+                    console.log(response);
+                    let post = response;
+                    let id = post.id;
+                    let name = post.userName;
+                    let title = post.postName;
+                    let contents = post.postText;
+                    let createdAt = post.createdAt;
+                    addHTML(id, name, title, contents, createdAt);
+                }
+            });
+        }
+
+        // 불러온 게시글을 html에 붙여줍니다.
+        function addHTML(id, name, title, contents, createdAt) {
+            let tempHtml = makeMessage(id, name, title, contents, createdAt);
+            $('#cards-box').append(tempHtml);
+        }
+
+        // 게시글 형태를 만들어줍니다.
+        function makeMessage(id, name, title, contents, createdAt)
+        {
+            let loginUsername = [[${username}]];
+
+            alert(loginUsername);
+            let hide = ""
+            if (loginUsername != name)
+            {
+                hide = "hide"
+            }
+            return `<div class="card">
+                        <div class="metadata">
+                           <div id="${id}-name" class="name">
+                               ${name}
+                           </div>
+                           <div class="date">
+                               ${createdAt}
+                           </div>
+                        </div>
+                    <h2 class='title' id="${id}-title">"${title}"</h2>
+                        <div class="contents" id="${id}-contents" >
+                           ${contents}
+                        </div>
+                        <div class="footer ${hide}">
+<!--                            <img id="${id}-delete" class="icon-delete" src="/static/images/delete.png" alt="" onclick="deleteOne('${id}')">-->
+                            <button onclick="deleteOne('${id}')">  삭제하기   </button>
+                        </div>
+                    </div>`;
+        }
+
+
+        // 게시글의 id 값을 받아 해당 댓글을 삭제합니다.
+        function deleteOne(id) {
+            if (confirm("정말 삭제하시겠습니까??") == false)
+            {
+                return
+            }
+            $.ajax({
+                type: "DELETE",
+                url: `/view/memos/${id}`,
+                success: function (response)
+                {
+                    alert('메시지 삭제에 성공하였습니다.');
+                    window.location.replace("/");
+                }
+            })
+        }
+
+
+        function getReplies() {
+            let postId = location.href.split("id=")[1]; //[앞부분] [2] localhos/modify.html?id=12&address=seoul&
+            $.ajax({
+                type: "GET",
+                url: `/api/reply/${postId}`,
+                data: {},
+                success: function (response) {
+                    for (let i = 0; i < response.length; i++) {
+                        let post = response[i];
+                        let id = post.id;
+                        let username = post.username;
+                        let reply = post.reply;
+                        let modifiedAt = post.modifiedAt;
+                        addReplyHTML(id, username, reply, modifiedAt);
+                    }
+                }
+            });
+        }
+
+        // 불로온 댓글을 html에 붙여줍니다.
+        function addReplyHTML(id, username, reply, modifiedAt) {
+            let tempHtml = makeReply(id, username, reply, modifiedAt);
+            $('#reply-box').append(tempHtml);
+        }
+
+        // 댓글의 형태를 만들어 줍니다.
+        function makeReply(id, username, reply, modifiedAt) {
+            let loginUsername = [[${username}]];
+            console.log(loginUsername)
+            let hide = "hide"
+            if (loginUsername == username) {
+                hide = ""
+            }
+            return `<div class="card">
+                        <div class="metadata">
+                           <div id="${id}-name" class="name">
+                               ${username}
+                           </div>
+                           <div class="date">
+                               ${modifiedAt}
+                           </div>
+                        </div>
+                        <div class="contents" id="${id}-reply" >
+                           ${reply}
+                        </div>
+                        <div id="${id}-editarea" class="edit">
+                            <textarea id="${id}-textarea" class="te-edit" name="" id="" cols="30" rows="5"></textarea>
+                        </div>
+                            <div class="footer ${hide}">
+                                <img id="${id}-edit" class="icon-start-edit" src="../static/images/edit.png" alt="" onClick="editPost('${id}')">
+                                <img id="${id}-delete" class="icon-delete" src="../static/images/delete.png" alt="" onClick="deleteReply('${id}')">
+                                <img id="${id}-submit" class="icon-end-edit" src="../static/images/done.png" alt="" onClick="submitEdit('${id}')">
+                            </div>
+                    </div>`;
+        }
+
+    </script >
+
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
+
+    <div id="cards-box" class="area-read">
+        <div class="card">
+            <!-- date/name 영역 -->
+            <div class="metadata">
+                <div class="date">
+                    October 10, 2020
+                </div>
+                <div class="name">
+                    anonymous
+                </div>
+            </div>
+            <!-- contents 조회/수정 영역-->
+
+            <h2>asd</h2>
+            <div class="contents">
+                <div id="1-contents" class="text">
+                    dsafnkalfklewakflekelafkleajfkleafkldsankflenwaklfnekwlafneklwanfkelawnfkelanfkleanfklew
+                </div>
+                <div id="1-editarea" class="edit">
+                    <!--  <textarea id="1-textarea" class="te-edit" name="" id="" cols="30" rows="5"></textarea>-->
+                </div>
+            </div>
+            <!-- 버튼 영역-->
+            <div class="footer">
+<!--                <img id="1-edit" class="icon-start-edit" src="/static/images/edit.png" alt="" onclick="editPost('1')">-->
+<!--                <img id="1-delete" class="icon-delete" src="/static/images/delete.png" alt="" onclick="deleteOne('1')">-->
+<!--                <img id="1-submit" class="icon-end-edit" src="/static/images/done.png" alt="" onclick="submitEdit('1')">-->
+            </div>
+        </div>
+    </div>
+
 
 </body>
 </html>
