@@ -13,6 +13,7 @@
     <meta property="og:description" content="관심상품을 선택하고, 최저가 알림을 확인해보세요!">
     <meta property="og:image" content="images/og_selectshop.png">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="/css/basic.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="/js/basic.js"></script>
     <title>나만의 셀렉샵</title>
@@ -30,12 +31,36 @@
 
 
 
-    <button th:if="${nickname}"  th:text="로그아웃" onclick="location.href='/user/logout'" >
+    <button th:if="${nickname}"  th:text="로그아웃" onclick="location.href='/user/logout'" >   </button>
+    <button th:if="${nickname}"  th:text="글쓰기"  onclick="location.href='/post/post'">   </button>
 
-    </button>
-    <button th:unless="${nickname}"  th:text="로그인" onclick="location.href='/user/login'" >
+    <button th:unless="${nickname}"  th:text="로그인" onclick="location.href='/user/login'" >   </button>
 
-    </button>
+</div>
+
+
+<div>
+
+
+    <table class="table">
+        <thead>
+        <tr class="tableHead">
+            <th scope="col" class="thPostNum"> 글 번호</th>
+            <th scope="col" class="thPostName"> 제목</th>
+            <th scope="col" class="thUserName"> 작성자</th>
+            <th scope="col" class="thWriteDay"> 작성일</th>
+        </tr>
+        </thead>
+
+        <tbody id="tablebody">
+        <!--                        <tr class="tableset">-->
+        <!--                            <td scope="row" class="user"> 글 번호1 </td>-->
+        <!--                            <td scope="row" class="user"> 제목1 </td>-->
+        <!--                            <td scope="row" class="user"> 작성자1 </td>-->
+        <!--                            <td scope="row" class="user"> 작성일1 </td>-->
+        <!--                        </tr>-->
+        </tbody>
+    </table>
 
 </div>
 

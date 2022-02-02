@@ -1,0 +1,77 @@
+
+.table
+{
+    margin : 0 auto 0 auto;
+}
+
+
+
+.thPostNum
+{
+
+    text-align: center;
+    width: 150px;
+    font-size: 15px;
+}
+
+
+
+.thPostName
+{
+    text-align: center;
+    font-size: 15px;
+    width: 400px;
+}
+
+.thUserName
+{
+    text-align: center;
+    width: 150px;
+    font-size: 15px;
+}
+
+
+.thWriteDay
+{
+    text-align: center;
+    width: 150px;
+    font-size: 15px;
+}
+
+
+.tbPostNum
+{
+    text-align: center;
+    width: 150px;
+    font-size: 12px;
+}
+
+.tbPostName
+{
+    text-align: left;
+    font-size: 12px;
+    width: 400px;
+}
+
+.tbUserName
+{
+    text-align: center;
+    width: 150px;
+    font-size: 12px;
+}
+
+.tbWriteDay
+{
+    text-align: center;
+    width: 150px;
+    font-size: 12px;
+}
+
+.writePost
+{
+
+    margin-left : 250px;
+    width  : 30px;
+    height : 30px;
+
+}

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="stylesheet" type="text/css" href="/css/basic.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+    <script src="/js/write.js"></script>
+
+    <title>Title</title>
+
+
+</head>
+<body>
+    <div>
+        <div id="writepage" class="popup ">
+            <div class=" writepage">
+                <h1 class = "WriteText">글 보기</h1>
+
+                <div class="area-write">
+
+                <textarea class="postfield" placeholder="게시글 제목을 적어주세요" name="contents" id="postName" cols="30"
+                          rows="10"></textarea>
+                    <textarea class="userfield" placeholder="작성자 이름을 적어주세요" name="contents" id="userName" cols="30"
+                              rows="10"></textarea>
+                    <textarea class="field" placeholder="공유하고 싶은 소식을 입력해주세요" name="contents" id="contents" cols="30"
+                              rows="10"></textarea>
+                    <!--            <button class="btn btn-danger" onclick="writePost()">작성하기</button>-->
+
+                </div>
+
+                <div>
+                    <button  id="close" class="close, writeBack" onclick=window.location.href='/'>
+                        글쓰기 취소
+                    </button>
+
+                    <button  id="writePost" class="close, writeBack" onclick="writePost()">
+                        글 쓰기
+                    </button>
+
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</body>
+</html>

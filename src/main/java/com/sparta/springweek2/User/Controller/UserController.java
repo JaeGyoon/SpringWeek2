@@ -74,6 +74,11 @@ public class UserController
     }
 
 
+    @GetMapping("/post/post")
+    public String WritePage()
+    {
+        return "write";
+    }
 
 
 
