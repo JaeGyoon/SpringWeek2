@@ -142,12 +142,108 @@
                             <textarea id="${id}-textarea" class="te-edit" name="" id="" cols="30" rows="5"></textarea>
                         </div>
                             <div class="footer ${hide}">
-                                <img id="${id}-edit" class="icon-start-edit" src="../static/images/edit.png" alt="" onClick="editPost('${id}')">
-                                <img id="${id}-delete" class="icon-delete" src="../static/images/delete.png" alt="" onClick="deleteReply('${id}')">
-                                <img id="${id}-submit" class="icon-end-edit" src="../static/images/done.png" alt="" onClick="submitEdit('${id}')">
+                                <img id="${id}-edit" class="icon-start-edit" src="/images/edit.png" alt="" onClick="editPost('${id}')">
+                                <img id="${id}-delete" class="icon-delete" src="images/delete.png" alt="" onClick="deleteReply('${id}')">
+                                <img id="${id}-submit" class="icon-end-edit" src="/images/done.png" alt="" onClick="submitEdit('${id}')">
                             </div>
                     </div>`;
         }
+
+        // 수정 버튼을 눌렀을 때, 기존 작성 내용을 수정박스(textarea)에 전달합니다.
+        function editPost(id) {
+            showEdits(id);
+            let contents = $(`#${id}-reply`).text().trim();
+            $(`#${id}-textarea`).val(contents);
+        }
+
+        // 숨길 버튼을 숨기고, 나타낼 버튼을 나타냅니다.
+        function showEdits(id) {
+            $(`#${id}-editarea`).show();
+            $(`#${id}-submit`).show();
+            $(`#${id}-delete`).show();
+
+            $(`#${id}-reply`).hide();
+            $(`#${id}-edit`).hide();
+        }
+
+        // 수정된 댓글을 put 요청 보내 update 합니다.
+        function submitEdit(id) {
+            // 1. 작성 대상 메모 contents 를 확인합니다
+            let reply = $(`#${id}-textarea`).val().trim();
+            // 2. 작성한 메모가 올바른지 isValidContents 함수를 통해 확인합니다.
+            if (isValidContents(reply) == false) {
+                return;
+            }
+            // 3. 전달할 data JSON으로 만듭니다.
+            let data = {"reply": reply};
+            // 4. PUT /api/memos/{id} 에 data를 전달합니다.
+            $.ajax({
+                type: "PUT",
+                url: `/api/reply/${id}`,
+                contentType: "application/json",
+                data: JSON.stringify(data),
+                success: function (response) {
+                    alert('메시지 변경에 성공하였습니다.');
+                    window.location.reload();
+                }
+            });
+        }
+
+        // 글이 정상인지 확인
+        function isValidContents(contents) {
+            if (contents == '') {
+                alert('댓글 내용을 입력해주세요');
+                return false;
+            }
+            return true;
+        }
+
+        // 댓글을 작성하고 post 요청을 보내 저장합니다.
+        function writeReply() {
+            let postid = location.href.split("id=")[1]; //[앞부분] [2] localhos/modify.html?id=12&address=seoul&
+            var username = [[${username}]];
+            let reply = $('#reply').val();
+            if (isValidContents(reply) == false) {
+                return;
+            }
+
+            let data = {'postid': postid, 'username': username, 'reply': reply};
+            $.ajax({
+                type: "POST",
+                url: "/api/reply",
+                contentType: "application/json",
+                data: JSON.stringify(data),
+                success: function (response) {
+                    if (response == true) {
+                        alert('메시지가 성공적으로 작성되었습니다.');
+                        window.location.reload();
+                    } else {
+                        alert('로그인을 해주세요>_<');
+                        window.location.replace("/user/login");
+                    }
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert('로그인을 해주세요>_<');
+                    window.location.replace("/user/login");
+                }
+            });
+        }
+
+        // 댓글의 id 값을 받아 해당 댓글을 삭제합니다.
+        function deleteReply(id) {
+            if (confirm("정말 삭제하시겠습니까??") == false) {
+                return
+            }
+            $.ajax({
+                type: "DELETE",
+                url: `/api/reply/${id}`,
+                success: function (response) {
+                    alert('댓글 삭제에 성공하였습니다.');
+                    window.location.reload();
+                }
+            })
+        }
+
 
     </script >
 
@@ -180,9 +276,9 @@
             </div>
             <!-- 버튼 영역-->
             <div class="footer">
-<!--                <img id="1-edit" class="icon-start-edit" src="/static/images/edit.png" alt="" onclick="editPost('1')">-->
-<!--                <img id="1-delete" class="icon-delete" src="/static/images/delete.png" alt="" onclick="deleteOne('1')">-->
-<!--                <img id="1-submit" class="icon-end-edit" src="/static/images/done.png" alt="" onclick="submitEdit('1')">-->
+                <img id="1-edit" class="icon-start-edit" src="/images/edit.png" alt="" onclick="editPost('1')">
+                <img id="1-delete" class="icon-delete" src="/images/delete.png" alt="" onclick="deleteOne('1')">
+                <img id="1-submit" class="icon-end-edit" src="/images/done.png" alt="" onclick="submitEdit('1')">
             </div>
         </div>
     </div>
